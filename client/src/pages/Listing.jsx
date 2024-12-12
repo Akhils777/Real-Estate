@@ -64,8 +64,7 @@ export default function Listing() {
                     backgroundImage: `url('${url}')`,
                     backgroundPosition: 'center',
                     backgroundRepeat: 'no-repeat',
-                    backgroundSize: 'contain',
-                    width: '100%',
+                    backgroundSize: 'cover',
                   }}
                 ></div>
               </SwiperSlide>

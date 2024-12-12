@@ -11,7 +11,7 @@ export default function Home() {
   const [saleListings, setSaleListings] = useState([]);
   const [rentListings, setRentListings] = useState([]);
   SwiperCore.use([Navigation]);
-  console.log(offerListings);
+
   useEffect(() => {
     const fetchOfferListings = async () => {
       try {
@@ -40,11 +40,12 @@ export default function Home() {
         const data = await res.json();
         setSaleListings(data);
       } catch (error) {
-        log(error);
+        console.log(error);
       }
     };
     fetchOfferListings();
   }, []);
+
   return (
     <div>
       {/* top */}
@@ -55,7 +56,7 @@ export default function Home() {
           place with ease
         </h1>
         <div className='text-gray-400 text-xs sm:text-sm'>
-          Sahand Estate is the best place to find your next perfect place to
+          Akhil Estate is the best place to find your next perfect place to
           live.
           <br />
           We have a wide range of properties for you to choose from.
@@ -69,25 +70,31 @@ export default function Home() {
       </div>
 
       {/* swiper */}
-      <Swiper navigation>
-        {offerListings &&
-          offerListings.length > 0 &&
-          offerListings.map((listing) => (
-            <SwiperSlide>
-              <div
-                style={{
-                  background: `url(${listing.imageUrls[0]}) center no-repeat`,
-                  backgroundSize: 'cover',
-                }}
-                className='h-[500px]'
-                key={listing._id}
-              ></div>
-            </SwiperSlide>
-          ))}
-      </Swiper>
+      <div className='h-[600px]'>
+        <Swiper navigation className='h-full'>
+          {offerListings &&
+            offerListings.length > 0 &&
+            offerListings.map((listing) => (
+              <SwiperSlide key={listing._id}>
+                <Link to={`/listing/${listing._id}`} className='block h-full'>
+                  <div 
+                    style={{
+                      background: `url("${listing.imageUrls[0]}") center no-repeat`,
+                      backgroundSize: 'cover',
+                    }}
+                    className='h-full w-full'
+                  >
+                    <div className='flex flex-col justify-end h-full bg-black bg-opacity-30 p-4'>
+                      <h3 className='text-white text-2xl font-semibold'>{listing.name}</h3>
+                    </div>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+        </Swiper>
+      </div>
 
       {/* listing results for offer, sale and rent */}
-
       <div className='max-w-6xl mx-auto p-3 flex flex-col gap-8 my-10'>
         {offerListings && offerListings.length > 0 && (
           <div className=''>
@@ -102,6 +109,7 @@ export default function Home() {
             </div>
           </div>
         )}
+        {/* Rent and Sale listings sections remain unchanged */}
         {rentListings && rentListings.length > 0 && (
           <div className=''>
             <div className='my-3'>
@@ -130,5 +138,6 @@ export default function Home() {
         )}
       </div>
     </div>
+
   );
 }
